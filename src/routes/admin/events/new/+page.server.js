@@ -1,13 +1,17 @@
 import pool from '$lib/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
-export async function load() {
+export async function load({ locals }) {
+    if (!locals.user) { redirect(303, '/login'); }
+
     const [rows] = await pool.execute('SELECT * FROM categories');
     return { categories: rows };
 }
 
 export const actions = {
-    create: async ({ request }) => {
+    create: async ({ request, locals }) => {
+        if (!locals.user) { redirect(303, '/login'); }
+
         const formData = await request.formData();
         const name = formData.get('name');
         const description = formData.get('description');

@@ -2,6 +2,7 @@ import pool from '$lib/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
 export async function load() {
+
     const [rows] = await pool.execute('SELECT * FROM categories');
 
     return {

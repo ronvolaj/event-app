@@ -17,7 +17,7 @@
 
     <div>
         <label for="startdate">Start Date:</label>
-        <input type="date" id="startdate" name="startdate" required value={data.event.startdate}/>
+        <input type="date" id="startdate" name="startdate" required value={data.event.startdate.toISOString().substring(0, 10)}/>
     </div>
 
     <div>

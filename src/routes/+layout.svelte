@@ -1,12 +1,27 @@
 <script>
 	import favicon from '$lib/assets/favicon.svg';
+	
 
-	let { children } = $props();
+	let { children, data } = $props();
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
+
+<header>
+   <p>Welcome {data.user?.username || 'Anonymous'}</p>
+
+   {#if (data.user)}
+
+   <form method="POST" action="/logout?/logout">
+        <button type="submit">Logout</button>
+    </form>
+    {:else}
+    <a href="/login">Login</a>
+    {/if}
+  
+</header>
 
 {@render children()}
 
@@ -43,5 +58,16 @@ a {
 a:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+header {
+  background: #2563eb;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

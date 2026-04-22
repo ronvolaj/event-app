@@ -1,7 +1,9 @@
 import pool from '$lib/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ params, locals }) {
+    if (!locals.user) { redirect(303, '/login'); }
+
     const id = params.id;
     const [rows] = await pool.execute('SELECT * FROM event WHERE id = ?', [id]);
 
@@ -15,7 +17,9 @@ export async function load({ params }) {
 }
 
 export const actions = {
-    edit: async ({ request, params }) => {
+    edit: async ({ request, params, locals }) => {
+        if (!locals.user) { redirect(303, '/login'); }
+
         const form = await request.formData();
         const id = params.id;
         const name = form.get('name');

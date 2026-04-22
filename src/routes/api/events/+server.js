@@ -9,7 +9,7 @@ export async function POST({ request }) {
 
     const { name, description } = await request.json();
 
-    const [result] = await pool.query('INSERT INTO event (name, description) VALUES (?, ?)', [name, description]);
+     await pool.query('INSERT INTO event (name, description, startdate) VALUES (?, ?, ?)', [name, description, startdate]);
 
     return Response.json({message: 'Event created successfully'}, {status :201});
 
