@@ -39,9 +39,68 @@
     </div>
 
     <div>
+    <label for="image" class="block mb-1 font-medium">Image</label>
+
+    <input type="file" id="image" name="image" accept="image/*" class="w-full border rounded p-2" >
+</div>
+
+    <div>
         <button type="submit">Create Event</button>
     </div>
 </form>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+
+    {#each data.events as event}
+
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+
+            {#if event.image_url}
+                <img
+                    src={event.image_url}
+                    alt={event.name}
+                    class="w-full h-56 object-cover"
+                >
+            {/if}
+
+            <div class="p-4">
+
+                <h2 class="text-xl font-bold mb-2">
+                    {event.name}
+                </h2>
+
+                <p class="text-gray-600 mb-2">
+                    {event.description}
+                </p>
+
+                <p class="text-sm text-gray-500 mb-4">
+                    {event.startdate} — {event.starttime}
+                </p>
+
+                <form method="POST" action="?/delete">
+
+                    <input
+                        type="hidden"
+                        name="id"
+                        value={event.id}
+                    >
+
+                    <button
+                        type="submit"
+                        class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                    >
+                        Delete Event
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {/each}
+
+</div>
 
 <style>
     form {
